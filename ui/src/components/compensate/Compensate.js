@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import { getShortAddress } from "../../utils/addressUtils";
 import "./Compensate.css";
 
-export default function Compensate({instance, account}) {
+export default function Compensate({ instance, account }) {
   const [getAmount, setGetAmount] = useState("");
-  const [event, setEvent] = useState([]);
+  const [footprintToCompensate, setFootprintToCompensate] = useState("");
+  const [events, setEvents] = useState([]);
 
   useEffect(() => {
     const loadData = async () => {
@@ -15,46 +16,56 @@ export default function Compensate({instance, account}) {
           if (err) {
             console.log(err);
           } else {
-            console.log(event);
             // Filter get only current company related events
-            if(event.returnValues.to.toLowerCase() === account.toLowerCase()){
-              setEvent((events) => [...events, event]);
+            if (event.returnValues.to.toLowerCase() === account.toLowerCase()) {
+              setEvents((prevEvents) => [...prevEvents, event]);
             }
           }
         }
       );
-    }
-
+    };
     loadData();
   }, [account, instance]);
 
   const onGetAmountChange = (e) => {
-    const getAmount = e.target.value;
+    setGetAmount(e.target.value);
+  };
 
-    setGetAmount(getAmount);
+  const onFootprintToCompensateChange = (e) => {
+    setFootprintToCompensate(e.target.value);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (getAmount === 0 || getAmount === '') {
-      alert('Fields cannot be empty or 0');
+
+    if (getAmount === "" || footprintToCompensate === "") {
+      alert("Fields cannot be empty");
       return;
     }
-    if(isNaN(getAmount)){
-      alert('Please enter number only');
+
+    if (isNaN(getAmount) || isNaN(footprintToCompensate)) {
+      alert("Please enter numbers only");
       return;
     }
 
     const tokenDecimals = await instance.methods.decimals().call();
-    console.log(tokenDecimals);
-    const getAmountUnits = getAmount * Math.pow(10, tokenDecimals);
-    
-    instance.methods.compensate(getAmountUnits.toString()).send({from: account})
-      .then(receipt => {
+    const footprintToCompensateUnits = footprintToCompensate * Math.pow(10, tokenDecimals);
+    const currentFootprint = await instance.methods.getFootPrint(account).call();
+
+    // Calculate the required GET amount based on the current footprint and the footprint to compensate
+    const requiredGetAmount = (footprintToCompensateUnits / currentFootprint) * Math.pow(10, tokenDecimals);
+
+    instance.methods
+      .compensate(requiredGetAmount.toString())
+      .send({ from: account })
+      .then((receipt) => {
         alert(
           `Success!\nTransaction hash ${receipt.transactionHash}\nGas used: ${receipt.gasUsed}`
         );
-      }).catch(err => console.error(err));
+        setGetAmount("");
+        setFootprintToCompensate("");
+      })
+      .catch((err) => console.error(err));
   };
 
   return (
@@ -75,14 +86,16 @@ export default function Compensate({instance, account}) {
                 onChange={onGetAmountChange}
                 value={getAmount}
               />
-              <label htmlFor="getAmount" className='mt-3'>Footprint to be compensated</label>
+              <label htmlFor="footprintToCompensate" className="mt-3">
+                Footprint to compensate
+              </label>
               <input
                 type="text"
                 className="form-control"
-                id="getAmount"
+                id="footprintToCompensate"
                 placeholder="0.00"
-                onChange={onGetAmountChange}
-                value={getAmount}
+                onChange={onFootprintToCompensateChange}
+                value={footprintToCompensate}
               />
             </div>
             <button type="submit" className="btn btn-primary">
@@ -91,23 +104,23 @@ export default function Compensate({instance, account}) {
           </form>
         </section>
         <section className="col text-center">
-          <img src="img/compensate.png" alt="green" width="250" height="300"/>
+          <img src="img/compensate.png" alt="green" width="250" height="300" />
         </section>
       </section>
       <div id="buyHistorySection">
         <h3>Compensate history</h3>
-        {event && event.length > 0 ? (
+        {events && events.length > 0 ? (
           <table className="history-table table table-hover">
             <thead>
               <tr>
                 <th>Receiver</th>
-                <th>Footprint at time of purchase</th>
+                <th>Footprint at time of compensation</th>
                 <th>GET Amount (units)</th>
                 <th>GET Amount</th>
               </tr>
             </thead>
             <tbody>
-              {event?.map((e) => (
+              {events?.map((e) => (
                 <tr key={e.id}>
                   <td>{getShortAddress(e.returnValues.to)}</td>
                   <td>{e.returnValues.footPrint}</td>
