@@ -11,55 +11,61 @@ export const EthereumProvider = ({ children }) => {
   const [balance, setBalance] = useState(null);
   const [isOwner, setIsOwner] = useState(false);
   const [ownerAddress, setOwnerAddress] = useState(null);
+  const [contractBalance, setContractBalance] = useState(null);
   const [totalSupply, setTotalSupply] = useState(null);
   const [certifiedCompanies, setCertifiedCompanies] = useState([]);
   const [certifiedIotDevices, setCertifiedIotDevices] = useState([]);
   const [carbonFootprintRecords, setCarbonFootprintRecords] = useState([]);
 
-  useEffect(() => {
-    const initEthereum = async () => {
-      if (window.ethereum) {
-        const ethProvider = new ethers.providers.Web3Provider(window.ethereum);
-        setProvider(ethProvider);
+  const initEthereum = async (accounts = null) => {
+    if (window.ethereum) {
+      const ethProvider = new ethers.providers.Web3Provider(window.ethereum);
+      setProvider(ethProvider);
 
-        try {
-          const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-          setAccount(accounts[0]);
-          const ethSigner = ethProvider.getSigner();
-          setSigner(ethSigner);
-
-          const balance = await ethProvider.getBalance(accounts[0]);
-          setBalance(ethers.utils.formatEther(balance));
-
-          const contract = new ethers.Contract(contractAddress, contractABI, ethSigner);
-          const owner = await contract.owner();
-          setOwnerAddress(owner);
-          setIsOwner(owner.toLowerCase() === accounts[0].toLowerCase());
-
-          const supply = await contract.totalSupply();
-          setTotalSupply(ethers.utils.formatEther(supply));
-
-          const companies = await contract.getCertifiedAddresses();
-          const devices = await Promise.all(companies.map(async (company) => await contract.getIOT(company)));
-          setCertifiedCompanies(companies);
-          setCertifiedIotDevices(devices);
-
-          const records = await contract.getFootprintRecords();
-          const formattedRecords = records.map(record => ({
-            timestamp: new Date(record.timestamp.toNumber() * 1000).toLocaleString(),
-            company: record.company,
-            footprint: record.footprint.toString()
-          }));
-          setCarbonFootprintRecords(formattedRecords);
-        } catch (error) {
-          console.error('Error connecting to Ethereum:', error);
+      try {
+        if (!accounts) {
+          accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
         }
-      } else {
-        console.log('Ethereum wallet not detected');
-      }
-    };
+        const lowerCaseAccount = accounts[0].toLowerCase();
+        setAccount(lowerCaseAccount); // 存储为小写格式
+        const ethSigner = ethProvider.getSigner();
+        setSigner(ethSigner);
 
+        const balance = await ethProvider.getBalance(lowerCaseAccount);
+        setBalance(ethers.utils.formatEther(balance));
+
+        const contract = new ethers.Contract(contractAddress, contractABI, ethSigner);
+        const owner = await contract.owner();
+        setOwnerAddress(owner);
+        setIsOwner(owner.toLowerCase() === lowerCaseAccount);
+
+        const contractBal = await ethProvider.getBalance(contractAddress);
+        setContractBalance(ethers.utils.formatUnits(contractBal, 'ether')); // Convert balance to ether
+
+        const supply = await contract.totalSupply();
+        setTotalSupply(ethers.utils.formatUnits(supply, 'ether')); // Convert supply to ether
+
+        const companies = await contract.getCertifiedAddresses();
+        const devices = await Promise.all(companies.map(async (company) => await contract.getIOT(company)));
+        setCertifiedCompanies(companies.map(addr => addr.toLowerCase())); // 存储为小写格式
+        setCertifiedIotDevices(devices.map(addr => addr.toLowerCase())); // 存储为小写格式
+
+      } catch (error) {
+        console.error('Error connecting to Ethereum:', error);
+      }
+    } else {
+      console.log('Ethereum wallet not detected');
+    }
+  };
+
+  useEffect(() => {
     initEthereum();
+
+    if (window.ethereum) {
+      window.ethereum.on('accountsChanged', (accounts) => {
+        initEthereum(accounts); // Re-initialize to get new account information
+      });
+    }
   }, []);
 
   const addCarbonFootprintRecord = (company, footprint) => {
@@ -67,7 +73,7 @@ export const EthereumProvider = ({ children }) => {
       ...records,
       {
         timestamp: new Date().toLocaleString(),
-        company,
+        company: company.toLowerCase(), // 存储为小写格式
         footprint
       }
     ]);
@@ -76,7 +82,7 @@ export const EthereumProvider = ({ children }) => {
   return (
     <EthereumContext.Provider value={{ 
       provider, signer, account, balance, isOwner, ownerAddress, 
-      totalSupply, certifiedCompanies, certifiedIotDevices, 
+      contractAddress, contractBalance, totalSupply, certifiedCompanies, certifiedIotDevices, 
       carbonFootprintRecords, setTotalSupply, setCertifiedCompanies, setCertifiedIotDevices, 
       addCarbonFootprintRecord
     }}>

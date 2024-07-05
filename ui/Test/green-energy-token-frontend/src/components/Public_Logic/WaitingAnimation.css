@@ -1,0 +1,47 @@
+/* src/Public_Logic/WaitingAnimation.css */
+
+.waiting-animation-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .waiting-animation-message {
+    margin-bottom: 20px;
+    font-size: 16px;
+    color: #333;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  }
+  
+  .spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border-left-color: #09f;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .waiting-animation-close-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007aff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .waiting-animation-close-button:hover {
+    background-color: #005bb5;
+  }
+  

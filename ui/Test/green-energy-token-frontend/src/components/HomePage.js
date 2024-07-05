@@ -1,27 +1,15 @@
-import React, { useEffect } from 'react';
-import { useEthereum } from '../context/EthereumContext';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
 
-const HomePage = () => {
-  const { account } = useEthereum();
-  const navigate = useNavigate();
+import WelcomeBoard from './WelcomeBoard';
+import ContractMiningLineGraph from './ContractMining_LineGraph';
 
-  useEffect(() => {
-    if (account) {
-      navigate('/dashboard');  // Redirect to dashboard if account is connected
-    }
-  }, [account, navigate]);
-
+function HomePage() {
   return (
     <div>
-      <h1>Welcome to Green Energy Token Platform</h1>
-      {account ? (
-        <p>Wallet connected successfully: {account}</p>
-      ) : (
-        <p>Please connect your wallet to proceed.</p>
-      )}
+      <WelcomeBoard />
+      <ContractMiningLineGraph />
     </div>
   );
-};
+}
 
 export default HomePage;
