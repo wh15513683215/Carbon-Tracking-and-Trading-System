@@ -1,4 +1,4 @@
-// SPDX-License-Identifier:MIT
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.6;
 
 import "./StandardERC20.sol";
@@ -11,6 +11,7 @@ contract GreenEnergyToken is StandardERC20 {
         uint256 timestamp;
         address company;
         uint256 footprint;
+        string action; // "add" for addition, "reduce" for reduction
     }
 
     mapping(address => uint) public footprintGenerated;
@@ -39,7 +40,7 @@ contract GreenEnergyToken is StandardERC20 {
 
     function addFootprint(address company, uint256 footprint) public onlyOwner {
         footprintGenerated[company] += footprint;
-        footprintRecords.push(CarbonFootprintRecord(block.timestamp, company, footprint));
+        footprintRecords.push(CarbonFootprintRecord(block.timestamp, company, footprint, "add"));
     }
 
     function withdraw() public onlyOwner {
@@ -70,6 +71,7 @@ contract GreenEnergyToken is StandardERC20 {
 
         _burn(msg.sender, amount);
         footprintGenerated[msg.sender] -= footprint;
+        footprintRecords.push(CarbonFootprintRecord(block.timestamp, msg.sender, footprint, "reduce"));
 
         emit Compensate(msg.sender, footprint, amount);
     }
