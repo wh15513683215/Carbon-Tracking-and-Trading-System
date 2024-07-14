@@ -1,0 +1,42 @@
+[
+    {
+        "Company Name": "TechCorp Inc.",
+        "Industry": "Technology",
+        "Year": 2019,
+        "Carbon Emissions": 4500,
+        "Carbon Offsets": 2000,
+        "Emission Reduction Initiatives": "Implemented energy-efficient servers"
+    },
+    {
+        "Company Name": "TechCorp Inc.",
+        "Industry": "Technology",
+        "Year": 2020,
+        "Carbon Emissions": 4200,
+        "Carbon Offsets": 2200,
+        "Emission Reduction Initiatives": "Adopted renewable energy sources"
+    },
+    {
+        "Company Name": "TechCorp Inc.",
+        "Industry": "Technology",
+        "Year": 2021,
+        "Carbon Emissions": 4000,
+        "Carbon Offsets": 2500,
+        "Emission Reduction Initiatives": "Improved waste management"
+    },
+    {
+        "Company Name": "TechCorp Inc.",
+        "Industry": "Technology",
+        "Year": 2022,
+        "Carbon Emissions": 3800,
+        "Carbon Offsets": 2700,
+        "Emission Reduction Initiatives": "Switched to electric vehicles for transportation"
+    },
+    {
+        "Company Name": "TechCorp Inc.",
+        "Industry": "Technology",
+        "Year": 2023,
+        "Carbon Emissions": 3500,
+        "Carbon Offsets": 3000,
+        "Emission Reduction Initiatives": "Installed solar panels on office buildings"
+    }
+]

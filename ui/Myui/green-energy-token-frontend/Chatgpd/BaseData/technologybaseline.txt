@@ -1,0 +1,29 @@
+{
+    "Technology": [
+        {
+            "Year": 2019,
+            "Average Carbon Emissions": 4700,
+            "Average Carbon Offsets": 1800
+        },
+        {
+            "Year": 2020,
+            "Average Carbon Emissions": 4500,
+            "Average Carbon Offsets": 2000
+        },
+        {
+            "Year": 2021,
+            "Average Carbon Emissions": 4300,
+            "Average Carbon Offsets": 2200
+        },
+        {
+            "Year": 2022,
+            "Average Carbon Emissions": 4100,
+            "Average Carbon Offsets": 2400
+        },
+        {
+            "Year": 2023,
+            "Average Carbon Emissions": 3900,
+            "Average Carbon Offsets": 2600
+        }
+    ]
+}

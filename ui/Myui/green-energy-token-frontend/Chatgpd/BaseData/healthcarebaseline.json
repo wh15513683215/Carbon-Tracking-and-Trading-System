@@ -1,0 +1,29 @@
+{
+    "Healthcare": [
+        {
+            "Year": 2019,
+            "Average Carbon Emissions": 8500,
+            "Average Carbon Offsets": 2800
+        },
+        {
+            "Year": 2020,
+            "Average Carbon Emissions": 8300,
+            "Average Carbon Offsets": 3000
+        },
+        {
+            "Year": 2021,
+            "Average Carbon Emissions": 8100,
+            "Average Carbon Offsets": 3200
+        },
+        {
+            "Year": 2022,
+            "Average Carbon Emissions": 7900,
+            "Average Carbon Offsets": 3400
+        },
+        {
+            "Year": 2023,
+            "Average Carbon Emissions": 7700,
+            "Average Carbon Offsets": 3600
+        }
+    ]
+}

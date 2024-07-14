@@ -1,0 +1,29 @@
+{
+    "Manufacturing": [
+        {
+            "Year": 2019,
+            "Average Carbon Emissions": 16000,
+            "Average Carbon Offsets": 4500
+        },
+        {
+            "Year": 2020,
+            "Average Carbon Emissions": 15500,
+            "Average Carbon Offsets": 4800
+        },
+        {
+            "Year": 2021,
+            "Average Carbon Emissions": 15000,
+            "Average Carbon Offsets": 5100
+        },
+        {
+            "Year": 2022,
+            "Average Carbon Emissions": 14500,
+            "Average Carbon Offsets": 5400
+        },
+        {
+            "Year": 2023,
+            "Average Carbon Emissions": 14000,
+            "Average Carbon Offsets": 5700
+        }
+    ]
+}

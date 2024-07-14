@@ -1,0 +1,42 @@
+[
+    {
+        "Company Name": "HealthMed Ltd.",
+        "Industry": "Healthcare",
+        "Year": 2019,
+        "Carbon Emissions": 8000,
+        "Carbon Offsets": 3000,
+        "Emission Reduction Initiatives": "Implemented green building standards"
+    },
+    {
+        "Company Name": "HealthMed Ltd.",
+        "Industry": "Healthcare",
+        "Year": 2020,
+        "Carbon Emissions": 7800,
+        "Carbon Offsets": 3200,
+        "Emission Reduction Initiatives": "Reduced single-use plastics"
+    },
+    {
+        "Company Name": "HealthMed Ltd.",
+        "Industry": "Healthcare",
+        "Year": 2021,
+        "Carbon Emissions": 7600,
+        "Carbon Offsets": 3500,
+        "Emission Reduction Initiatives": "Optimized energy use in hospitals"
+    },
+    {
+        "Company Name": "HealthMed Ltd.",
+        "Industry": "Healthcare",
+        "Year": 2022,
+        "Carbon Emissions": 7400,
+        "Carbon Offsets": 3700,
+        "Emission Reduction Initiatives": "Promoted telemedicine to reduce travel"
+    },
+    {
+        "Company Name": "HealthMed Ltd.",
+        "Industry": "Healthcare",
+        "Year": 2023,
+        "Carbon Emissions": 7200,
+        "Carbon Offsets": 4000,
+        "Emission Reduction Initiatives": "Increased use of renewable energy"
+    }
+]

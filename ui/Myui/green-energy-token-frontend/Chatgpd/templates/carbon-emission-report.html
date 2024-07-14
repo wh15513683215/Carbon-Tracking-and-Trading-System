@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Carbon Emissions Report Generator</title>
+</head>
+<body>
+    <h1>Carbon Emissions Report Generator</h1>
+    <form id="reportForm">
+        <textarea id="companyData" rows="10" cols="50" placeholder="Enter company data in JSON format..."></textarea><br>
+        <button type="button" onclick="generateReport()">Generate Report</button>
+    </form>
+    <a id="downloadLink" style="display:none;">Download Report</a>
+
+    <script>
+        async function generateReport() {
+            const companyData = document.getElementById('companyData').value;
+            const response = await fetch('/generate_report', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ company_data: companyData })
+            });
+
+            if (response.ok) {
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = url;
+                a.download = 'report.pdf';
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+            } else {
+                alert('Failed to generate report.');
+            }
+        }
+    </script>
+</body>
+</html>

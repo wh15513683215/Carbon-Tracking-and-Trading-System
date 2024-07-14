@@ -1,0 +1,42 @@
+[
+    {
+        "Company Name": "Manufactory Co.",
+        "Industry": "Manufacturing",
+        "Year": 2019,
+        "Carbon Emissions": 15000,
+        "Carbon Offsets": 5000,
+        "Emission Reduction Initiatives": "Optimized production processes"
+    },
+    {
+        "Company Name": "Manufactory Co.",
+        "Industry": "Manufacturing",
+        "Year": 2020,
+        "Carbon Emissions": 14500,
+        "Carbon Offsets": 5200,
+        "Emission Reduction Initiatives": "Upgraded to energy-efficient machinery"
+    },
+    {
+        "Company Name": "Manufactory Co.",
+        "Industry": "Manufacturing",
+        "Year": 2021,
+        "Carbon Emissions": 14000,
+        "Carbon Offsets": 5500,
+        "Emission Reduction Initiatives": "Enhanced recycling programs"
+    },
+    {
+        "Company Name": "Manufactory Co.",
+        "Industry": "Manufacturing",
+        "Year": 2022,
+        "Carbon Emissions": 13500,
+        "Carbon Offsets": 5800,
+        "Emission Reduction Initiatives": "Reduced water usage"
+    },
+    {
+        "Company Name": "Manufactory Co.",
+        "Industry": "Manufacturing",
+        "Year": 2023,
+        "Carbon Emissions": 13000,
+        "Carbon Offsets": 6000,
+        "Emission Reduction Initiatives": "Installed wind turbines"
+    }
+]
